@@ -2,11 +2,12 @@ version: "3.3"
 
 services:
   postgres:
-    image: postgres:11.0
+    image: postgres:11.6
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=student
       - POSTGRES_PASSWORD=student
+      - POSTGRES_DB=studentdb
     volumes:
       - ./pgdata:/var/lib/postgresql/data
