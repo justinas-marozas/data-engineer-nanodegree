@@ -11,7 +11,7 @@ time_table_drop = """drop table if exists "time";"""
 songplay_table_create = ("""
 create table if not exists songplays
 (
-    songplay_id int,
+    songplay_id serial,
     start_time timestamp,
     user_id int,
     level text,  -- enum?
@@ -74,7 +74,6 @@ create table if not exists "time"
 songplay_table_insert = ("""
 insert into songplays
 (
-    songplay_id,
     start_time,
     user_id,
     level,
@@ -84,7 +83,7 @@ insert into songplays
     location,
     user_agent
 )
-values (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+values (%s, %s, %s, %s, %s, %s, %s, %s);
 """)
 
 user_table_insert = ("""
