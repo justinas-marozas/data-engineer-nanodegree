@@ -72,19 +72,70 @@ create table if not exists "time"
 # INSERT RECORDS
 
 songplay_table_insert = ("""
+insert into songplays
+(
+    songplay_id,
+    start_time,
+    user_id,
+    level,
+    song_id,
+    artist_id,
+    session_id,
+    location,
+    user_agent
+)
+values (%s, %s, %s, %s, %s, %s, %s, %s, %s);
 """)
 
 user_table_insert = ("""
+insert into users
+(
+    user_id,
+    first_name,
+    last_name,
+    gender,
+    level
+)
+values (%s, %s, %s, %s, %s);
 """)
 
 song_table_insert = ("""
+insert into songs
+(
+    song_id,
+    title,
+    artist_id,
+    year,
+    duration
+)
+values (%s, %s, %s, %s, %s);
 """)
 
 artist_table_insert = ("""
+insert into artists
+(
+    artist_id,
+    name,
+    location,
+    latitude,
+    longitude
+)
+values (%s, %s, %s, %s, %s);
 """)
 
 
 time_table_insert = ("""
+insert into "time"
+(
+    start_time,
+    hour,
+    day,
+    week,
+    month,
+    year,
+    weekday
+)
+values (%s, %s, %s, %s, %s, %s, %s);
 """)
 
 # FIND SONGS
