@@ -141,6 +141,14 @@ values (%s, %s, %s, %s, %s, %s, %s);
 # FIND SONGS
 
 song_select = ("""
+select
+    s.song_id,
+    a.artist_id
+from songs as s
+join artists as a on a.artist_id = s.artist_id
+where s.song_id = %s
+and a.artist_id = %s
+and s.duration = %s;
 """)
 
 # QUERY LISTS
