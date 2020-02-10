@@ -12,14 +12,14 @@ songplay_table_create = ("""
 create table if not exists songplays
 (
     songplay_id serial primary key,
-    start_time timestamp,
-    user_id int,
-    level text,  -- enum?
+    start_time timestamp not null,
+    user_id int not null,
+    level text not null,
     song_id text,
     artist_id text,
-    session_id int,
-    location text,
-    user_agent text
+    session_id int not null,
+    location text not null,
+    user_agent text not null
 );
 """)
 
@@ -29,8 +29,8 @@ create table if not exists users
     user_id int primary key,
     first_name text,
     last_name text,
-    gender text,  -- enum?
-    level text  -- enum?
+    gender text,
+    level text not null
 );
 """)
 
@@ -38,10 +38,10 @@ song_table_create = ("""
 create table if not exists songs
 (
     song_id text primary key,
-    title text,
-    artist_id text,
-    year int,
-    duration float
+    title text not null,
+    artist_id text not null,
+    year int not null,
+    duration float not null
 );
 """)
 
@@ -49,7 +49,7 @@ artist_table_create = ("""
 create table if not exists artists
 (
     artist_id text primary key,
-    name text,
+    name text not null,
     location text,
     latitude float,
     longitude float
