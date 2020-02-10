@@ -6,21 +6,53 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Description: Read a song JSON file and save contents to the given cursor.
+
+    Arguments:
+        cur: A cursor object.
+        filepath: A filepath.
+
+    Returns:
+        None
+    """
     # open song file
     with open(filepath, mode='r', encoding='utf-8') as fh:
         song_json = fh.read()
         df = pd.read_json(f'[{song_json}]')
 
     # insert song record
-    song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values[0]
+    song_data = df[[
+        'song_id',
+        'title',
+        'artist_id',
+        'year',
+        'duration'
+    ]].values[0]
     cur.execute(song_table_insert, song_data)
 
     # insert artist record
-    artist_data = df[['artist_id', 'artist_name', 'artist_location', 'artist_latitude', 'artist_longitude']].values[0]
+    artist_data = df[[
+        'artist_id',
+        'artist_name',
+        'artist_location',
+        'artist_latitude',
+        'artist_longitude'
+    ]].values[0]
     cur.execute(artist_table_insert, artist_data)
 
 
 def process_log_file(cur, filepath):
+    """
+    Description: Read a log JSON file and save contents to the given cursor.
+
+    Arguments:
+        cur: A cursor object.
+        filepath: A filepath.
+
+    Returns:
+        None
+    """
     # open log file
     log_json = ','.join(open(filepath, mode='r', encoding='utf-8'))
     df = pd.read_json(f'[{log_json}]')
@@ -93,6 +125,19 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Description: Read JSON files in a given `filepath` and use given `func`
+    to process them.
+
+    Arguments:
+        cur: A cursor object.
+        conn: A connection object.
+        filepath: A filepath string to the directory with JSON files.
+        func: A callable to use to process the JSON files.
+
+    Returns:
+        None
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -112,6 +157,15 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Description: Entrypoint of this script.
+
+    Arguments:
+        None
+
+    Returns:
+        None
+    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
