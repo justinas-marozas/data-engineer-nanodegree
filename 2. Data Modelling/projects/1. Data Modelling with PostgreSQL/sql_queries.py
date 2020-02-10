@@ -11,7 +11,7 @@ time_table_drop = """drop table if exists "time";"""
 songplay_table_create = ("""
 create table if not exists songplays
 (
-    songplay_id serial,
+    songplay_id serial primary key,
     start_time timestamp,
     user_id int,
     level text,  -- enum?
@@ -26,7 +26,7 @@ create table if not exists songplays
 user_table_create = ("""
 create table if not exists users
 (
-    user_id int,
+    user_id int primary key,
     first_name text,
     last_name text,
     gender text,  -- enum?
@@ -37,7 +37,7 @@ create table if not exists users
 song_table_create = ("""
 create table if not exists songs
 (
-    song_id text,
+    song_id text primary key,
     title text,
     artist_id text,
     year int,
@@ -48,7 +48,7 @@ create table if not exists songs
 artist_table_create = ("""
 create table if not exists artists
 (
-    artist_id text,
+    artist_id text primary key,
     name text,
     location text,
     latitude float,
@@ -95,7 +95,8 @@ insert into users
     gender,
     level
 )
-values (%s, %s, %s, %s, %s);
+values (%s, %s, %s, %s, %s)
+on conflict (user_id) do nothing;
 """)
 
 song_table_insert = ("""
@@ -107,7 +108,8 @@ insert into songs
     year,
     duration
 )
-values (%s, %s, %s, %s, %s);
+values (%s, %s, %s, %s, %s)
+on conflict (song_id) do nothing;
 """)
 
 artist_table_insert = ("""
@@ -119,7 +121,8 @@ insert into artists
     latitude,
     longitude
 )
-values (%s, %s, %s, %s, %s);
+values (%s, %s, %s, %s, %s)
+on conflict (artist_id) do nothing;
 """)
 
 
